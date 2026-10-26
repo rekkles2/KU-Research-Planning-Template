@@ -472,10 +472,10 @@ headsep=13pt,%
   \KU@resourceseparator
   \mbox{\href{#2}{\textbf{#1}}}%
   \def\KU@resourceseparator{%
-    \nobreak\hspace{0.65em}\textcolor{KUSecondary}{\textperiodcentered}%
-    \hspace{0.65em}\allowbreak}}
+    \nobreak\hspace{0.8em}\textcolor{KUSecondary}{\textperiodcentered}%
+    \hspace{0.8em}\allowbreak}}
 \newcommand{\KU@resourcecontent}{%
-  \fontsize{9}{12}\selectfont\raggedright\color{KUSecondary}%
+  \fontsize{8.5}{11.5}\selectfont\raggedright\color{KUSecondary}%
   \setlength{\parindent}{0pt}\setlength{\parskip}{2pt}%
   \def\KU@resourceseparator{}\KU@resources\par}
 % Transparent vector logo: no colored image container or raster conversion.
@@ -487,20 +487,32 @@ headsep=13pt,%
   \par\addvspace{9pt}%
   {\color{KUCrimson!18}\hrule height .35pt}%
   \nobreak\vspace{7pt}}
+% Keep the resource links and logo together instead of stretching to both edges.
 \newcommand{\KU@resourcearea}{%
   \ifthenelse{\boolean{logo}}{%
     \KU@footerstart
     \ifx\KU@resources\@empty
-      \noindent\hfill
-      \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
+      \noindent\makebox[\linewidth][c]{%
+        \begin{minipage}[c]{.18\linewidth}\KU@logotile\end{minipage}}\par
     \else
-      \sbox{\KU@resourcebox}{\begin{minipage}{.74\linewidth}\KU@resourcecontent\end{minipage}}%
+      % Measure the labels at their actual type size; cap the column for wrapping.
+      \sbox{\KU@resourcebox}{%
+        \fontsize{8.5}{11.5}\selectfont
+        \def\KU@resourceseparator{}\KU@resources}%
+      \@tempdima=\dimexpr\wd\KU@resourcebox+1pt\relax
+      \ifdim\@tempdima>.66\linewidth \@tempdima=.66\linewidth\fi
+      \edef\KU@resourcewidth{\the\@tempdima}%
+      \sbox{\KU@resourcebox}{%
+        \begin{minipage}{\KU@resourcewidth}\KU@resourcecontent\end{minipage}}%
       \ifdim\dimexpr\ht\KU@resourcebox+\dp\KU@resourcebox\relax>.25\textheight
-        {\KU@resourcecontent}\par\smallskip\noindent\hfill
-        \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
+        {\KU@resourcecontent}\par\smallskip
+        \noindent\makebox[\linewidth][c]{%
+          \begin{minipage}[c]{.18\linewidth}\KU@logotile\end{minipage}}\par
       \else
-        \noindent\begin{minipage}[c]{.74\linewidth}\KU@resourcecontent\end{minipage}%
-        \hfill\begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
+        \noindent\makebox[\linewidth][c]{%
+          \raisebox{1pt}{\begin{minipage}[c]{\KU@resourcewidth}\KU@resourcecontent\end{minipage}}%
+          \hspace{1.5em}%
+          \begin{minipage}[c]{.18\linewidth}\KU@logotile\end{minipage}}\par
       \fi
     \fi
   }{\ifx\KU@resources\@empty\else
