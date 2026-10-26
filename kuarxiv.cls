@@ -466,11 +466,18 @@ headsep=13pt,%
 \newcommand{\KUResetResources}{\gdef\KU@resources{}}
 \newcommand{\KUResource}[2]{%
   \g@addto@macro\KU@resources{\KU@oneresource{#1}{#2}}}
+% Each resource label is the clickable text; URLs remain independently editable.
+\newcommand{\KU@resourceseparator}{}
 \newcommand{\KU@oneresource}[2]{%
-  \par\noindent\textbf{#1: }\href{#2}{link}}
+  \KU@resourceseparator
+  \mbox{\href{#2}{\textbf{#1}}}%
+  \def\KU@resourceseparator{%
+    \nobreak\hspace{0.65em}\textcolor{KUSecondary}{\textperiodcentered}%
+    \hspace{0.65em}\allowbreak}}
 \newcommand{\KU@resourcecontent}{%
   \fontsize{9}{12}\selectfont\raggedright\color{KUSecondary}%
-  \setlength{\parindent}{0pt}\setlength{\parskip}{2pt}\KU@resources\par}
+  \setlength{\parindent}{0pt}\setlength{\parskip}{2pt}%
+  \def\KU@resourceseparator{}\KU@resources\par}
 % Transparent vector logo: no colored image container or raster conversion.
 \newcommand{\KU@logotile}{%
   \includegraphics[width=\linewidth,keepaspectratio]{TemplateAssets/ku_logo.pdf}}
