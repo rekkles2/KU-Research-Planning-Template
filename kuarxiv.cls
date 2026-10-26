@@ -461,47 +461,44 @@ headsep=13pt,%
   {\fontsize{10}{13}\selectfont\theabstract\par}%
   \@ifundefined{@keywords}{}{\par\vspace{4pt}%
     {\fontsize{9}{11.5}\selectfont\color{KUSecondary}\textbf{Keywords: }\@keywords\par}}}
-% Resources are optional, reusable paper metadata.
+% Optional resources: use any label (Code, Demo, Homepage, Dataset, ...).
+% Empty destinations are omitted; remove or comment out unwanted entries.
 \def\KU@resources{}
 \newcommand{\KUResetResources}{\gdef\KU@resources{}}
 \newcommand{\KUResource}[2]{%
-  \g@addto@macro\KU@resources{\KU@oneresource{#1}{#2}}}
-% Each resource label is the clickable text; URLs remain independently editable.
-\newcommand{\KU@resourceseparator}{}
+  \ifstrempty{#2}{}{\g@addto@macro\KU@resources{\KU@oneresource{#1}{#2}}}}
 \newcommand{\KU@oneresource}[2]{%
-  \KU@resourceseparator
-  \mbox{\href{#2}{\textbf{#1}}}%
-  \def\KU@resourceseparator{%
-    \nobreak\hspace{0.65em}\textcolor{KUSecondary}{\textperiodcentered}%
-    \hspace{0.65em}\allowbreak}}
+  \par\begingroup
+  \settowidth{\@tempdima}{\textbf{#1:}\hspace{.45em}}%
+  \hangindent=\@tempdima\hangafter=1
+  \noindent\textbf{#1:}\hspace{.45em}%
+  \href{#2}{\textcolor{KUCrimson}{\nolinkurl{#2}}}\par
+  \endgroup}
 \newcommand{\KU@resourcecontent}{%
-  \fontsize{9}{12}\selectfont\raggedright\color{KUSecondary}%
-  \setlength{\parindent}{0pt}\setlength{\parskip}{2pt}%
-  \def\KU@resourceseparator{}\KU@resources\par}
-% Transparent vector logo: no colored image container or raster conversion.
+  \fontsize{8.5}{11.5}\selectfont\raggedright\color{KUMetadata}%
+  \urlstyle{same}%
+  \setlength{\parindent}{0pt}\setlength{\parskip}{1.5pt}%
+  \KU@resources\par}
+% Preserve the original vector artwork and its proportions.
 \newcommand{\KU@logotile}{%
   \includegraphics[width=\linewidth,keepaspectratio]{TemplateAssets/ku_logo.pdf}}
-\newsavebox{\KU@resourcebox}
-% A quiet footer band groups project resources with the university signature.
+% Retain the quiet divider between keywords and the compact resource footer.
 \newcommand{\KU@footerstart}{%
-  \par\addvspace{9pt}%
+  \par\addvspace{8pt}%
   {\color{KUCrimson!18}\hrule height .35pt}%
-  \nobreak\vspace{7pt}}
+  \nobreak\vspace{6pt}}
 \newcommand{\KU@resourcearea}{%
   \ifthenelse{\boolean{logo}}{%
     \KU@footerstart
     \ifx\KU@resources\@empty
       \noindent\hfill
-      \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
+      \begin{minipage}[b]{.16\linewidth}\KU@logotile\par\vspace{0pt}\end{minipage}\par
     \else
-      \sbox{\KU@resourcebox}{\begin{minipage}{.74\linewidth}\KU@resourcecontent\end{minipage}}%
-      \ifdim\dimexpr\ht\KU@resourcebox+\dp\KU@resourcebox\relax>.25\textheight
-        {\KU@resourcecontent}\par\smallskip\noindent\hfill
-        \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
-      \else
-        \noindent\begin{minipage}[c]{.74\linewidth}\KU@resourcecontent\end{minipage}%
-        \hfill\begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
-      \fi
+      % Bottom alignment keeps the small signature at the final resource row.
+      \noindent\begin{minipage}[b]{.80\linewidth}%
+        \KU@resourcecontent\vspace{0pt}\end{minipage}%
+      \hfill\begin{minipage}[b]{.16\linewidth}%
+        \KU@logotile\par\vspace{0pt}\end{minipage}\par
     \fi
   }{\ifx\KU@resources\@empty\else
        \KU@footerstart{\KU@resourcecontent}\fi}}
@@ -512,7 +509,7 @@ headsep=13pt,%
   \begingroup
   \begin{tcolorbox}[enhanced,breakable,colback=KUFrontBackground,opacityback=1,
     colframe=KUFrontBackground,opacityframe=0,coltext=black,boxrule=0pt,arc=2.5mm,
-    left=5mm,right=5mm,top=4.5mm,bottom=4.5mm,boxsep=0pt,
+    left=5mm,right=5mm,top=4.5mm,bottom=3mm,boxsep=0pt,
     fuzzy shadow={0.35mm}{-0.65mm}{-0.1mm}{0.12mm}{fill=KUShadow!24!white},
     before skip=0pt,after skip=10pt]
   % Preserve university Crimson for title and role markers.
