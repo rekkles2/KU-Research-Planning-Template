@@ -481,7 +481,7 @@ headsep=13pt,%
   \KU@resources\par}
 % Preserve the original vector artwork and its proportions.
 \newcommand{\KU@logotile}{%
-  \includegraphics[width=\linewidth,keepaspectratio]{TemplateAssets/ku_logo.pdf}}
+  \includegraphics[width=1.05\linewidth,keepaspectratio]{TemplateAssets/ku_logo.pdf}}
 % Retain the quiet divider between keywords and the compact resource footer.
 \newcommand{\KU@footerstart}{%
   \par\addvspace{8pt}%
