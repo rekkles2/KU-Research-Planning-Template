@@ -467,7 +467,7 @@ headsep=13pt,%
 \newcommand{\KUResource}[2]{%
   \g@addto@macro\KU@resources{\KU@oneresource{#1}{#2}}}
 \newcommand{\KU@oneresource}[2]{%
-  \par\noindent\textbf{#1: }\href{#2}{\nolinkurl{#2}}}
+  \par\noindent\textbf{#1: }\href{#2}{link}}
 \newcommand{\KU@resourcecontent}{%
   \fontsize{9}{12}\selectfont\raggedright\color{KUSecondary}%
   \setlength{\parindent}{0pt}\setlength{\parskip}{2pt}\KU@resources\par}
