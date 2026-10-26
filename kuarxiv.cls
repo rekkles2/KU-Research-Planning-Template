@@ -482,23 +482,29 @@ headsep=13pt,%
 \newcommand{\KU@logotile}{%
   \includegraphics[width=\linewidth,keepaspectratio]{TemplateAssets/ku_logo.pdf}}
 \newsavebox{\KU@resourcebox}
+% A quiet footer band groups project resources with the university signature.
+\newcommand{\KU@footerstart}{%
+  \par\addvspace{9pt}%
+  {\color{KUCrimson!18}\hrule height .35pt}%
+  \nobreak\vspace{7pt}}
 \newcommand{\KU@resourcearea}{%
   \ifthenelse{\boolean{logo}}{%
-    \par\addvspace{10pt}%
+    \KU@footerstart
     \ifx\KU@resources\@empty
-      \noindent\hfill\begin{minipage}[t]{.26\linewidth}\vspace{0pt}\KU@logotile\end{minipage}\par
+      \noindent\hfill
+      \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
     \else
-      \sbox{\KU@resourcebox}{\begin{minipage}{.70\linewidth}\KU@resourcecontent\end{minipage}}%
+      \sbox{\KU@resourcebox}{\begin{minipage}{.74\linewidth}\KU@resourcecontent\end{minipage}}%
       \ifdim\dimexpr\ht\KU@resourcebox+\dp\KU@resourcebox\relax>.25\textheight
-        {\KU@resourcecontent}\par\noindent\hfill
-        \begin{minipage}[t]{.26\linewidth}\vspace{0pt}\KU@logotile\end{minipage}\par
+        {\KU@resourcecontent}\par\smallskip\noindent\hfill
+        \begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
       \else
-        \noindent\begin{minipage}[t]{.70\linewidth}\vspace{0pt}\KU@resourcecontent\end{minipage}%
-        \hfill\begin{minipage}[t]{.26\linewidth}\vspace{0pt}\KU@logotile\end{minipage}\par
+        \noindent\begin{minipage}[c]{.74\linewidth}\KU@resourcecontent\end{minipage}%
+        \hfill\begin{minipage}[c]{.22\linewidth}\KU@logotile\end{minipage}\par
       \fi
     \fi
   }{\ifx\KU@resources\@empty\else
-       \par\addvspace{10pt}{\KU@resourcecontent}\fi}}
+       \KU@footerstart{\KU@resourcecontent}\fi}}
 % Warm-white card with a softly layered, low-contrast warm shadow.
 \definecolor{KUFrontBackground}{HTML}{FCF8F9}
 \definecolor{KUFrontSecondary}{HTML}{626262}
